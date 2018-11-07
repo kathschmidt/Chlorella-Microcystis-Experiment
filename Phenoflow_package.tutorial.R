@@ -1,14 +1,16 @@
-Phenoflow_package tutorial
-Date: October 23, 2018
+#Phenoflow_package tutorial
+#Ruben Props; edited by Kathryn Schmidt
+#Experiment: Chlorella-Microcystis Invasion
+#Date: October 23, 2018
+#LAST RUN: November 6, 2018
 
 #### Install packages ####
-install.packages("devtools")
-library(devtools)
-install_github("lievenclement/flowFDA", build_vignettes=TRUE)
-devtools::install_github("rprops/Phenoflow_package")
-install.packages("hexbin")
-library(Phenoflow)
+#install.packages("devtools")
+#install_github("lievenclement/flowFDA", build_vignettes=TRUE)
+#devtools::install_github("rprops/Phenoflow_package")
+#install.packages("hexbin")
 
+library(devtools)
 library("Phenoflow") # for fingerprinting
 library("flowViz") # for plotting
 library("ggplot2") # for plotting
