@@ -1,7 +1,14 @@
 #Phenoflow_package tutorial
+<<<<<<< HEAD
 #Created: October 23, 2018
 #Experimen: Microcystis-Chlorella Invasion Experiment 
 #Last run: October 28, 2018
+=======
+#Ruben Props; edited by Kathryn Schmidt
+#Experiment: Chlorella-Microcystis Invasion
+#Date: October 23, 2018
+#LAST RUN: November 6, 2018
+>>>>>>> db0ff98e6562e7b61f5f5cc2c4f4f7edbb5c7b7d
 
 #### Install packages ####
 #install.packages("devtools")
