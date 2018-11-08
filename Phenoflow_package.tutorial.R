@@ -1,14 +1,8 @@
 #Phenoflow_package tutorial
-<<<<<<< HEAD
-#Created: October 23, 2018
-#Experimen: Microcystis-Chlorella Invasion Experiment 
-#Last run: October 28, 2018
-=======
 #Ruben Props; edited by Kathryn Schmidt
 #Experiment: Chlorella-Microcystis Invasion
 #Date: October 23, 2018
 #LAST RUN: November 6, 2018
->>>>>>> db0ff98e6562e7b61f5f5cc2c4f4f7edbb5c7b7d
 
 #### Install packages ####
 #install.packages("devtools")
@@ -28,42 +22,42 @@ set.seed(777)
 rm(list=ls())
 
 # Set working directory 
-setwd("/Users/kathrynschmidt/Downloads/FCS.files.Chlorella.Microcystis.Experiment/")
+setwd("/Users/katschm/Box Sync/FCM_Microcystis_Chlorella_Experiment/")
 
 #### Load data ####
 #data(flowData)
 #head(flowData[[1]]@exprs)
 path = "Experiment Run with Autofluorescence"
-flowData  <- read.flowSet(path = path,pattern = ".fcs", emptyValue = FALSE)
+algaeData  <- read.flowSet(path = path,pattern = ".fcs", emptyValue = FALSE)
 
 #### Denoise data ####
 # Next: you need to select a biological gate
 # transform data (data that is exported is not transformed)
 # Select phenotypic features of interest and transform parameters, arcsin hyperbolic transformation
-algaeData_transformed <- transform(algaeData,`BL1-A`=asinh(`BL1-A`), 
-                                  `SSC-A`=asinh(`SSC-A`), 
-                                  `BL3-A`=asinh(`BL3-A`), 
-                                  `VL1-A`=asinh(`VL1-A`), 
-                                  `VL4-A`=asinh(`VL4-A`), 
-                                  `FSC-A`=asinh(`FSC-A`))
+algaeData_transformed <- transform(algaeData,`VL4-A`=asinh(`VL4-A`),
+                                   `BL1-A`=asinh(`BL1-A`),
+                                   `BL3-A`=asinh(`BL3-A`),
+                                   `SSC-A`=asinh(`SSC-A`),
+                                   `FSC-A`=asinh(`FSC-A`))
+
 param=c("BL1-A", "FL3-H","SSC-A","BL3-A","VL1-A","VL4-A","FSC-A") #only used these parameters for analysis
 remove(algaeData) #to make sure you are looking at the transformed data
 
 ### Create a PolygonGate for denoising the dataset
 ### Define coordinates for gate in sqrcut1 in format: c(x,x,x,x,y,y,y,y)
-sqrcut1 <- matrix(c(8.75,8.75,14,14,
-                    3,7.5,14,3),ncol=2, nrow=4)
-colnames(sqrcut1) <- c("FL1-H","FL3-H")
+sqrcut1 <- matrix(c(4,4,15,15,
+                    6.5,15,15,6.5),ncol=2, nrow=4)
+colnames(sqrcut1) <- c("BL1-A","BL3-A")
 polyGate1 <- polygonGate(.gate=sqrcut1, filterId = "Total Cells")
 
 ###  Gating quality check
 sampleNames(flowData_transformed)
-xyplot(`BL3-A` ~ `BL1-A`, data=algaeData_transformed[sample(1:9)],
+xyplot(`BL3-A` ~ `BL1-A`, data=algaeData_transformed[sample(3)],
        scales=list(y=list(limits=c(0,14)),
-                   x=list(limits=c(6,16))),
+                   x=list(limits=c(0,14))),
        axis = axis.default, nbin=125, 
        par.strip.text=list(col="white", font=2, cex=2), smooth=FALSE)
-      #filter=polyGate1,
+      filter=polyGate1
       #can input "data=flowData_transformed[sample(1:41)[1:6]]" which will randomly select 6 to visualize out of the 41 experiments
 
 ### Isolate only the cellular information based on the polyGate1
